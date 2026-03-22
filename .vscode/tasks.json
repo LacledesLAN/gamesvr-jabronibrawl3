@@ -1,0 +1,27 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Linux Image",
+            "type": "shell",
+            "command": "docker build . --pull -f linux.Dockerfile -t lltest/gamesvr-jabronibrawl3:latest --no-cache --build-arg BUILDNODE=$env:computername;",
+            "group": "build",
+            "problemMatcher": [],
+            "promptOnClose": true
+        },
+        {
+            "label": "Build & Execute Self Tests",
+            "type": "shell",
+            "command": "docker run -it --rm lltest/gamesvr-jabronibrawl3:latest ./ll-tests/gamesvr-jabronibrawl3.sh;",
+            "dependsOn": "Build Linux Image",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "promptOnClose": true
+        }
+    ]
+}
